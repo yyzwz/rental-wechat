@@ -1,0 +1,336 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [
+		{
+			"path": "pages/login/login",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationBarTitleText": "艾是OA登入",
+				"app-plus": {
+					"bounce": "none",
+					"pullToRefresh": {
+						"support": true,
+						// "color": "#fa436a",
+						"style": "default"
+					}
+				}
+			}
+		},
+		// 主页
+		{
+			"path": "pages/index/index",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationBarTitleText": "通用办公",
+				"app-plus": {
+					"bounce": "none",
+					"pullToRefresh": {
+						"support": true,
+						// "color": "#fa436a",
+						"style": "default"
+					}
+				}
+			}
+		},
+		// 待办事项
+		{
+			"path": "pages/works/index",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationBarTitleText": "待办事项",
+				"app-plus": {
+					"pullToRefresh": {
+						"support": true,
+						"style": "default"
+					}
+				}
+			}
+		},
+		// 待办详情
+		{
+			"path": "pages/works/detail",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "待办详情",
+				"app-plus": {
+					"pullToRefresh": {
+						"support": true,
+						"style": "default"
+					}
+				}
+			}
+		},
+		// 报修
+		{
+			"path": "pages/works/repair/index",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationBarTitleText": "报修列表"
+			}
+		},
+		{
+			"path": "pages/works/repair/detail",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "报修详情"
+			}
+		},
+		{
+			"path": "pages/works/repair/add",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "报修申请"
+			}
+		},
+		
+		//签到
+		{
+			"path": "pages/attend/plan",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationBarTitleText": "我的班次"
+			}
+		},
+		{
+			"path": "pages/attend/add",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationBarTitleText": "签到打卡"
+			}
+		},
+		
+		// 应用中心
+		{
+			"path": "pages/application/index",
+			"style": {
+				"navigationBarTitleText": "应用中心"
+			}
+		},
+		// 我的
+		{
+			"path": "pages/profile/profile",
+			"style": {
+				"navigationBarTitleText": "我的",
+				// #ifdef MP
+				"navigationStyle": "custom",
+				// #endif
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"type": "transparent",
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue658",
+							"fontSize": "28",
+							"color": "#303133",
+							"width": "42px",
+							"background": "rgba(0,0,0,0)"
+						}]
+					}
+				}
+			}
+		},
+		// 公告
+		{
+			"path": "pages/notice/notice",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationBarTitleText": "通知公告",
+				"app-plus": {
+					"pullToRefresh": {
+						"support": true,
+						// "color": "#fa436a",
+						"style": "default"
+					}
+				}
+			}
+		},
+		// 公告详情
+		{
+			"path": "pages/notice/detail",
+			"style": {
+				"navigationBarTitleText": "公告详情"
+			}
+		},
+		//个人资料
+		{
+			"path": "pages/user/userinfo/userinfo",
+			"style": {
+				"navigationBarTitleText": "个人资料"
+			}
+		}
+
+	],
+
+	"subPackages": [
+		// 设置
+		{
+			"root": "pages/set",
+			"pages": [
+				// 设置
+				{
+					"path": "set",
+					"style": {
+						"navigationBarTitleText": "设置"
+					}
+				},
+				
+				// 反馈详情
+				{
+					"path": "feedback/detail",
+					"style": {
+						"navigationBarTitleText": "意见反馈详情"
+					}
+				},
+				// 反馈列表
+				{
+					"path": "feedback/list",
+					"style": {
+						"enablePullDownRefresh": true,
+						"navigationBarTitleText": "意见反馈",
+						"app-plus": {
+							"pullToRefresh": {
+								"support": true,
+								// "color": "#fa436a",
+								"style": "default"
+							}
+						}
+					}
+				},
+				// 反馈
+				{
+					"path": "feedback/feedback",
+					"style": {
+						"navigationBarTitleText": "意见反馈"
+					}
+				},
+				// 关于
+				{
+					"path": "about/about",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				// 关于详情
+				{
+					"path": "about/detail",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				// 站点帮助
+				{
+					"path": "helper/index",
+					"style": {
+						"navigationBarTitleText": "站点帮助"
+					}
+				},
+				// 站点帮助详情
+				{
+					"path": "helper/detail",
+					"style": {
+						"navigationBarTitleText": "站点帮助详情"
+					}
+				}
+
+			]
+		},
+		
+
+		// 公共
+		{
+			"root": "pages/public",
+			"pages": [
+				
+				// 登录
+				{
+					"path": "login",
+					"style": {
+						"navigationBarTitleText": "登录",
+						"navigationStyle": "custom",
+						"app-plus": {
+							"titleNView": false,
+							"animationType": "slide-in-bottom"
+						}
+					}
+				},
+				
+				// 修改密码
+				{
+					"path": "password",
+					"style": {
+						"navigationBarTitleText": "忘记密码",
+						"navigationStyle": "custom",
+						"app-plus": {
+							"titleNView": false,
+							"animationType": "slide-in-bottom"
+						}
+					}
+				}
+			]
+		},
+
+		// 应用中心-学习中心
+		{
+			"root": "pages/study",
+			"pages": [
+				// 新闻动态
+				{
+					"path": "index",
+					"style": {
+						"enablePullDownRefresh": true,
+						"navigationBarTitleText": "新闻动态"
+					}
+				},
+				{
+					"path": "detail",
+					"style": {
+						"enablePullDownRefresh": true,
+						"navigationBarTitleText": "新闻详情"
+					}
+				}
+
+			]
+		}
+
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "通用办公",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#f8f8f8"
+	},
+	"tabBar": {
+		"color": "#C0C4CC",
+		"selectedColor": "#1cbbb4",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/tab-home.png",
+				"selectedIconPath": "static/tab-home-cyan.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/works/index",
+				"iconPath": "static/tab-notify.png",
+				"selectedIconPath": "static/tab-notify-cyan.png",
+				"text": "待办"
+			},
+			{
+				"pagePath": "pages/application/index",
+				"iconPath": "static/tab-cate.png",
+				"selectedIconPath": "static/tab-cate-cyan.png",
+				"text": "应用"
+			},
+			{
+				"pagePath": "pages/profile/profile",
+				"iconPath": "static/tab-my.png",
+				"selectedIconPath": "static/tab-my-cyan.png",
+				"text": "我的"
+			}
+		]
+	}
+}
