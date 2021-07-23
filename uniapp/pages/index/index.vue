@@ -48,7 +48,7 @@
 				<u-input :border="border" type="textarea" maxlength=100 height=150 placeholder="请输入用车事由" v-model="model.reason" auto-height></u-input>
 			</u-form-item>
 			<u-form-item :label-position="labelPosition" label="上传图片" prop="photo" label-width="150">
-				<u-upload width="160" height="160"></u-upload>
+				<u-upload :action="action" :file-list="fileList" max-count="1" @on-success="beforeUpload" width="160" height="160"></u-upload>
 			</u-form-item>
 		</u-form>
 		<u-button @click="submitFx">提交</u-button>
@@ -64,7 +64,10 @@ export default {
 	data() {
 		let that = this;
 		return {
+			action: 'http://49.234.32.81:8888/xboot/myFiles/uploadFile',
+			fileList: [],
 			params: {
+				action: "",
 				year: true,
 				month: true,
 				day: true,
@@ -87,7 +90,8 @@ export default {
 				jssj: '',
 				ccdd: '',
 				mdd: '',
-				reason: ''
+				reason: '',
+				image: '',
 			},
 			carList: [
 				{
@@ -147,6 +151,9 @@ export default {
 		init() {
 			// this.getCarList();
 		},
+		beforeUpload(e) {
+			this.model.image = e.result;
+		},
 		loginOut() {
 			uni.navigateTo({
 				url:'../login/login'
@@ -175,12 +182,14 @@ export default {
 					jssj: '',
 					ccdd: '',
 					mdd: '',
-					reason: ''
+					reason: '',
+					image: ''
 				}
 			this.model = item;
 		},
 		submitFx() {
 			var that = this;
+			console.log(this.model);
 			uni.request({
 			    url: 'http://49.234.32.81:8888/xboot/audit/addOnApp',
 				method: "GET",
@@ -199,8 +208,10 @@ export default {
 					ccdd: that.model.ccdd,
 					mdd: that.model.mdd,
 					reason: that.model.reason,
+					image: that.model.image
 				},
 			    success: (res) => {
+					console.log(res);
 					if(res.data.success) {
 						that.clearFrom();
 						uni.showToast({

@@ -6,9 +6,12 @@
 			<text>申请人：{{item.sqr}}</text>
 		</view>
 		<view class="input-title">
-			审核状态<text v-show="item.status==0">尚未审核</text>
-			<text v-show="item.status==1">已通过</text>
-			<text v-show="item.status==2">未通过</text>
+			<text v-show="item.status==0">审核状态：尚未审核</text>
+			<text v-show="item.status==1">审核状态：已通过</text>
+			<text v-show="item.status==2">审核状态：未通过</text>
+		</view>
+		<view class="input-title">
+			<text>审核意见：{{item.auditMsg}}</text>
 		</view>
 		<view class="input-title">
 			<text>车牌号：{{item.car}}</text>
@@ -52,7 +55,7 @@
 			</view>
 		</view>
 
-		<view class="uni-timeline">
+		<!-- <view class="uni-timeline">
 			<view class="uni-timeline-item" :class="[
 						index === 0 ? `text-${themeColor.name} uni-timeline-first-item` : '',
 						index === approveDetail.length - 1 ? 'uni-timeline-last-item' : ''
@@ -68,9 +71,9 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="feedback-title" v-show="item.status==0">
-			<text>问题和意见</text>
+			<text>审批意见</text>
 			<text class="feedback-quick" @tap="chooseMsg">快速键入 <text class="iconfont iconxia"></text></text>
 		</view>
 		<view class="feedback-body" v-show="item.status==0">
@@ -119,7 +122,7 @@
 				approveDetail:[{"id":68,"time":'2021-12-12:12:12:12',"action":"repair/approve","suggest":"好好好的","name":"系统管理员","approve":"审批"},{"id":69,"time":'2021-12-12:12:12:12',"action":"repair/audit","suggest":"好的","name":"古月","approve":"审核"},{"id":69,"time":'2021-12-12:12:12:12',"action":"repair/apply","suggest":"提交申请","name":"古月","approve":"申请"}],
 				approveId:'',
 				radioList:[{"key":"repair/audit","value":"审核"},{"key":"repair/refused","value":"拒绝"}],
-				imageList:['http://wephp-oa.oss-cn-shenzhen.aliyuncs.com/images/2020/09/10/image_1599669475_VQXiR1bX.jpg','http://wephp-oa.oss-cn-shenzhen.aliyuncs.com/images/2020/09/10/image_1599669475_VQXiR1bX.jpg','http://wephp-oa.oss-cn-shenzhen.aliyuncs.com/images/2020/09/10/image_1599669475_VQXiR1bX.jpg'],
+				imageList:[],
 				id: undefined,
 			};
 		},
@@ -138,6 +141,7 @@
 					method: "GET",
 				    success: (res) => {
 						that.item = res.data.result;
+						that.imageList.push("https://zwz99.top/car/" + that.item.image);
 				    },fail(e) {
 				    	console.log(e);
 				    }
@@ -168,7 +172,7 @@
 				console.log(status);
 				if(status == 'repair/refused') {
 					uni.request({
-					    url: 'http://49.234.32.81:8888/xboot/audit/auditOne?id=' + that.danId+'&status=2&userName='+app.userData.nickname,
+					    url: 'http://49.234.32.81:8888/xboot/audit/auditOne?id=' + that.danId+'&status=2&userName='+app.userData.id + "&msg=" + that.sendDate.suggest,
 						method: "GET",
 					    success: (res) => {
 							uni.showToast({
@@ -181,7 +185,7 @@
 					});
 				} else if(status == 'repair/audit') {
 					uni.request({
-					    url: 'http://49.234.32.81:8888/xboot/audit/auditOne?id=' + that.danId+'&status=1&userName='+app.userData.nickname,
+					    url: 'http://49.234.32.81:8888/xboot/audit/auditOne?id=' + that.danId+'&status=1&userName='+app.userData.id,
 						method: "GET",
 					    success: (res) => {
 							uni.showToast({

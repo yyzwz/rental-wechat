@@ -318,19 +318,20 @@
 				"iconPath": "static/tab-notify.png",
 				"selectedIconPath": "static/tab-notify-cyan.png",
 				"text": "待办"
-			},
-			{
-				"pagePath": "pages/application/index",
-				"iconPath": "static/tab-cate.png",
-				"selectedIconPath": "static/tab-cate-cyan.png",
-				"text": "应用"
-			},
-			{
-				"pagePath": "pages/profile/profile",
-				"iconPath": "static/tab-my.png",
-				"selectedIconPath": "static/tab-my-cyan.png",
-				"text": "我的"
 			}
+			// ,
+			// {
+			// 	"pagePath": "pages/application/index",
+			// 	"iconPath": "static/tab-cate.png",
+			// 	"selectedIconPath": "static/tab-cate-cyan.png",
+			// 	"text": "应用"
+			// },
+			// {
+			// 	"pagePath": "pages/profile/profile",
+			// 	"iconPath": "static/tab-my.png",
+			// 	"selectedIconPath": "static/tab-my-cyan.png",
+			// 	"text": "我的"
+			// }
 		]
 	},
 	"condition" : { //模式配置，仅开发期间生效

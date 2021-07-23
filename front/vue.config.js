@@ -6,7 +6,8 @@ module.exports = {
         port: 80,
         proxy: {
             '/xboot': {
-                target: 'http://127.0.0.1:8888',  // 请求本地 需要xboot后端项目
+                target: 'http://127.0.0.1:8888',
+                // target: 'http://49.234.32.81:8888',
                 ws: true
             },
             '/foo': {

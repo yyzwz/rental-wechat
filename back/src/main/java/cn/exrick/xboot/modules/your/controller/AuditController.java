@@ -5,9 +5,11 @@ import cn.exrick.xboot.common.utils.ResultUtil;
 import cn.exrick.xboot.common.utils.SecurityUtil;
 import cn.exrick.xboot.common.vo.PageVo;
 import cn.exrick.xboot.common.vo.Result;
+import cn.exrick.xboot.modules.base.entity.Department;
 import cn.exrick.xboot.modules.base.entity.DepartmentHeader;
 import cn.exrick.xboot.modules.base.entity.User;
 import cn.exrick.xboot.modules.base.service.DepartmentHeaderService;
+import cn.exrick.xboot.modules.base.service.DepartmentService;
 import cn.exrick.xboot.modules.base.service.mybatis.IUserService;
 import cn.exrick.xboot.modules.your.entity.Audit;
 import cn.exrick.xboot.modules.your.service.IAuditService;
@@ -39,7 +41,7 @@ public class AuditController {
     private IAuditService iAuditService;
 
     @Autowired
-    private SecurityUtil securityUtil;
+    private DepartmentService departmentService;
 
     @Autowired
     private IUserService iUserService;
@@ -56,13 +58,24 @@ public class AuditController {
 
 
     @RequestMapping(value = "/auditOne", method = RequestMethod.GET)
-    public Result<Audit> auditOne(@RequestParam String id,@RequestParam int status,@RequestParam String userName) {
-        Audit audit = iAuditService.getById(id);
-        if(audit != null) {
-            audit.setStatus(status);
-            audit.setShrr(userName);
-            iAuditService.saveOrUpdate(audit);
-            return new ResultUtil<Audit>().setData(audit);
+    public Result<Audit> auditOne(@RequestParam String id,@RequestParam int status,@RequestParam String userName,@RequestParam(required = false) String msg) {
+        User user = iUserService.getById(userName);
+        if(user != null) {
+            Audit audit = iAuditService.getById(id);
+            if(audit != null) {
+                audit.setStatus(status);
+                if(msg == null || msg.equals("") || msg.equals("undefinded")) {
+                    if(status == 1) {
+                        msg = "同意";
+                    } else {
+                        msg = "不同意";
+                    }
+                }
+                audit.setAuditMsg(msg);
+                audit.setShrr(user.getNickname());
+                iAuditService.saveOrUpdate(audit);
+                return new ResultUtil<Audit>().setData(audit);
+            }
         }
         return new ResultUtil<Audit>().setErrorMsg("NULL");
     }
@@ -80,6 +93,13 @@ public class AuditController {
     public Result<IPage<Audit>> getByPage(PageVo page) {
 
         IPage<Audit> data = iAuditService.page(PageUtil.initMpPage(page));
+        List<Audit> records = data.getRecords();
+        for (Audit record : records) {
+            Department department = departmentService.get(record.getYcbm());
+            if(department != null) {
+                record.setYcbm(department.getTitle());
+            }
+        }
         return new ResultUtil<IPage<Audit>>().setData(data);
     }
 
@@ -107,7 +127,7 @@ public class AuditController {
     public Result<Audit> addOnApp(@RequestParam String userId,@RequestParam String car,@RequestParam String carOwner,
                                    @RequestParam String jcr,@RequestParam String kssj,
                                    @RequestParam String jssj,@RequestParam String ccdd,
-                                   @RequestParam String mdd,@RequestParam String reason) {
+                                   @RequestParam String mdd,@RequestParam String reason,@RequestParam String image) {
         User user = iUserService.getById(userId);
         if(user!= null) {
             Audit audit = new Audit();
@@ -123,6 +143,8 @@ public class AuditController {
             audit.setCcdd(ccdd);
             audit.setMdd(mdd);
             audit.setReason(reason);
+            audit.setImage(image);
+            audit.setAuditMsg("");
             iAuditService.saveOrUpdate(audit);
             return new ResultUtil<Audit>().setSuccessMsg("OK");
         }

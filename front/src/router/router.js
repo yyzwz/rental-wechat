@@ -5,7 +5,7 @@ export const loginRouter = {
     path: '/login',
     name: 'login',
     meta: {
-        title: '登录 - XXXX管理系统 '
+        title: '登录 - 私车公用管理系统 '
     },
     component: () => import('@/views/login.vue')
 };
@@ -14,7 +14,7 @@ export const registRouter = {
     path: '/regist',
     name: 'regist',
     meta: {
-        title: '注册 - XXXX管理系统'
+        title: '注册 - 私车公用管理系统'
     },
     component: () => import('@/views/regist.vue')
 };
@@ -23,7 +23,7 @@ export const registResult = {
     path: '/regist-result',
     name: 'regist-result',
     meta: {
-        title: '注册结果 - XXXX管理系统'
+        title: '注册结果 - 私车公用管理系统'
     },
     component: () => import('@/views/regist-result.vue')
 };
@@ -32,7 +32,7 @@ export const reset = {
     path: '/reset',
     name: 'reset',
     meta: {
-        title: '重置密码 - XXXX管理系统'
+        title: '重置密码 - 私车公用管理系统'
     },
     component: () => import('@/views/reset.vue')
 };
@@ -41,7 +41,7 @@ export const relateRouter = {
     path: '/relate',
     name: 'relate',
     meta: {
-        title: '绑定账号 - XXXX管理系统 '
+        title: '绑定账号 - 私车公用管理系统 '
     },
     component: () => import('@/views/relate.vue')
 };
@@ -50,7 +50,7 @@ export const authorizeRouter = {
     path: '/authorize',
     name: 'authorize',
     meta: {
-        title: '统一认证平台 - XXXX管理系统 '
+        title: '统一认证平台 - 私车公用管理系统 '
     },
     component: () => import('@/views/authorize.vue')
 };

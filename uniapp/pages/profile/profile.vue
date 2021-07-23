@@ -9,18 +9,18 @@
 					<image class="portrait" :src="headImg"></image>
 					<text class="username">
 						{{'登录/注册'}}
-						{{ '18986869999'}}
+						{{ '17857058888'}}
 					</text>
 				</view>
 			</view>
 			<!--vip信息-->
 			<view class="vip-card-box">
 				<view class="b-btn">
-					{{'系统管理员'}}
+					{{'XXX部门'}}
 				</view>
 				<view class="tit">
 					<i class="iconfont iconzuanshi" />
-					{{ '维博网络' }}
+					{{ 'XXXX有限公司' }}
 				</view>
 				<text class="e-m">技术交流请加QQ群:1107210028</text>
 			</view>

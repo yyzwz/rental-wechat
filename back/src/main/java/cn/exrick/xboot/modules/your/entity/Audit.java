@@ -64,4 +64,7 @@ public class Audit extends XbootBaseEntity {
 
     @ApiModelProperty(value = "状态")
     private int status;
+
+    @ApiModelProperty(value = "状态")
+    private String auditMsg;
 }

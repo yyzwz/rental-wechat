@@ -3,7 +3,8 @@
 		<u-form :model="form" ref="uForm" class="wrap">
 			<u-form-item label="账号" class="item"><u-input v-model="form.code" placeholder="请输入账号"/></u-form-item>
 			<u-form-item label="密码" class="item"><u-input v-model="form.pwd" placeholder="请输入密码" type="password"/></u-form-item>
-			<u-button type="primary" @click="login" class="login">登录</u-button>
+			<u-button type="primary" @click="login" class="login">登录<u-loading mode="flower" :show="loadingFlag"></u-loading></u-button>
+			{{resData}}
 		</u-form>
 	</view>
 </template>
@@ -13,17 +14,21 @@
 export default {
 	data() {
 		return {
+			loadingFlag: false,
 			form: {
 				code: '',
 				pwd: '',
 			},
 			token: '',
-			msg: ''
+			msg: '',
+			resData: ''
 		};
 	},
 	methods: {
 		login() {
 			var that = this;
+			that.resData = "请求中";
+			that.loadingFlag = true;
 			uni.request({
 			    url: 'http://49.234.32.81:8888/xboot/uniapp/login',
 			    data: {
@@ -32,7 +37,9 @@ export default {
 			    },
 				method: "GET",
 			    success: (res) => {
+					that.resData = res;
 					console.log(res)
+					that.loadingFlag = false;
 					if(res.statusCode != 200) {
 						uni.showToast({
 							title:"请求失败",

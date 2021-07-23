@@ -12,7 +12,7 @@
         <div class="loginLeft">
           <img src="../assets/login/logo.png" alt="" srcset="">
           <span class="line"></span>
-          <span class="title">XXXX管理系统</span>
+          <span class="title">私车公用管理系统</span>
         </div>
       </div>
       <div class="loginMiddle">

@@ -1,7 +1,7 @@
 {
   "name": "front",
   "version": "3.3.3",
-  "description": "XXXX管理系统",
+  "description": "私车公用管理系统",
   "author": "zwz <916077357@qq.com>",
   "private": true,
   "scripts": {
