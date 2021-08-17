@@ -31,6 +31,15 @@ public class File extends XbootBaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "所属部门")
+    private String departmentId;
+
+    @ApiModelProperty(value = "所属部门")
+    private String departmentTitle;
+
+    @ApiModelProperty(value = "保密程度")
+    private Integer secrecy;
+
     @ApiModelProperty(value = "原文件名")
     private String name;
 

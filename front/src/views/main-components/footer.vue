@@ -1,23 +1,9 @@
 <template>
   <div class="foot">
-    <Row type="flex" justify="space-around" class="foot-item">
-      <a
-        class="item"
-        href="https://www.kancloud.cn/zwz/xboot/1009234"
-        target="_blank"
-        >{{ $t("docs") }}</a
-      >
-      <a class="item" href="https://github.com/zwz/x-boot" target="_blank">
-        <Icon custom="iconfont icon-github" size="16" />
-      </a>
-      <a class="item" href="http://xpay.zwz.cn/pay?xboot" target="_blank">{{
-        $t("fullVersion")
-      }}</a>
-    </Row>
     <Row type="flex" justify="center" class="copyright">
-      Copyright © 2018 - Present
-      <a href="http://zwz.cn" target="_blank" style="margin: 0 5px"
-        >zwz</a
+      Copyright © 2021 - 云谷档案管理系统
+      <a href="https://www.baidu.com" target="_blank" style="margin: 0 5px"
+        >云谷</a
       >
       {{ $t("rights") }}
     </Row>

@@ -5,7 +5,7 @@ export const loginRouter = {
     path: '/login',
     name: 'login',
     meta: {
-        title: '登录 - 私车公用管理系统 '
+        title: '登录 - 云谷办公管理系统'
     },
     component: () => import('@/views/login.vue')
 };
@@ -14,7 +14,7 @@ export const registRouter = {
     path: '/regist',
     name: 'regist',
     meta: {
-        title: '注册 - 私车公用管理系统'
+        title: '注册 - 云谷办公管理系统'
     },
     component: () => import('@/views/regist.vue')
 };
@@ -23,7 +23,7 @@ export const registResult = {
     path: '/regist-result',
     name: 'regist-result',
     meta: {
-        title: '注册结果 - 私车公用管理系统'
+        title: '注册结果 - 云谷办公管理系统'
     },
     component: () => import('@/views/regist-result.vue')
 };
@@ -32,7 +32,7 @@ export const reset = {
     path: '/reset',
     name: 'reset',
     meta: {
-        title: '重置密码 - 私车公用管理系统'
+        title: '重置密码 - 云谷办公管理系统'
     },
     component: () => import('@/views/reset.vue')
 };
@@ -41,7 +41,7 @@ export const relateRouter = {
     path: '/relate',
     name: 'relate',
     meta: {
-        title: '绑定账号 - 私车公用管理系统 '
+        title: '绑定账号 - 云谷办公管理系统 '
     },
     component: () => import('@/views/relate.vue')
 };
@@ -50,7 +50,7 @@ export const authorizeRouter = {
     path: '/authorize',
     name: 'authorize',
     meta: {
-        title: '统一认证平台 - 私车公用管理系统 '
+        title: 'XBoot统一认证平台 - 云谷办公管理系统 '
     },
     component: () => import('@/views/authorize.vue')
 };
@@ -94,6 +94,8 @@ export const otherRouter = {
         { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/message.vue') },
         { path: 'add', title: '添加', name: 'add', component: () => import('@/views/xboot-vue-template/new-window/add.vue') },
         { path: 'edit', title: '编辑', name: 'edit', component: () => import('@/views/xboot-vue-template/new-window/edit.vue') },
+        { path: 'leave', title: '请假申请', name: 'leave', component: () => import('@/views/activiti/business/leave.vue') },
+        { path: 'historic-detail', title: '流程进度历史详情', name: 'historic_detail', component: () => import('@/views/activiti/historic-detail/historicDetail.vue') }
     ]
 };
 

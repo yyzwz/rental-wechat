@@ -52,7 +52,6 @@ public class User extends XbootBaseEntity {
     private String password;
 
     @ApiModelProperty(value = "用户名/昵称/姓名")
-    @NotBlank(message = "不能为空")
     @Size(max = 20, message = "昵称长度不能超过20")
     private String nickname;
 
@@ -60,9 +59,14 @@ public class User extends XbootBaseEntity {
     @Pattern(regexp = NameUtil.regMobile, message = "11位手机号格式不正确")
     private String mobile;
 
+    @ApiModelProperty(value = "手机2")
+    private String mobile2;
+
     @ApiModelProperty(value = "邮箱")
-    @Pattern(regexp = NameUtil.regEmail, message = "邮箱格式不正确")
     private String email;
+
+    @ApiModelProperty(value = "职位")
+    private String position;
 
     @ApiModelProperty(value = "省市县地址")
     private String address;

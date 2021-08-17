@@ -8,6 +8,8 @@ export const vaptchaID = config.vaptchaID
 export const vaptchaOffline = `${config.baseApi}/common/vaptcha/offline`
 // 文件上传接口
 export const uploadFile = `${config.baseApi}/upload/file`
+// 重要文件上传接口
+export const uploadFile2 = `${config.baseApi}/upload/file2`
 // 验证码渲染图片接口
 export const drawCodeImage = `${config.baseApi}/common/captcha/draw/`
 // 获取菜单
@@ -17,7 +19,9 @@ export const getDictData = `${config.baseApi}/dictData/getByType/`
 // Websocket
 export const ws = `${config.baseApi}/ws`
 
-
+export const fileShenQing = (params) => {
+    return postRequest('/getFileAudit/shenQing', params)
+}
 
 // 登陆
 export const login = (params) => {

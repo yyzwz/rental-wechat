@@ -292,6 +292,24 @@
         >
       </div>
     </Modal>
+    <Modal
+        v-model="shenQingModal"
+        title="文件获取申请"
+        ok-text="确认申请"
+        @on-ok="shenQingFx">
+        <Form :label-width="95">
+          <Row :gutter="16">
+            <FormItem readonly label="文件名">
+              <Input readonly v-model="selectFileRow.name" style="width:300px" />
+            </FormItem>
+          </Row>
+          <Row :gutter="16">
+            <FormItem readonly label="申请原因">
+              <Input v-model="getReason" type="textarea" :rows="4" placeholder="请描述您申请该文件的原因..." style="width:300px" />
+            </FormItem>
+          </Row>
+        </Form>
+    </Modal>
   </div>
 </template>
 
@@ -304,6 +322,7 @@ import {
   renameFile,
   deleteFile,
   aliDownloadFile,
+  fileShenQing
 } from "@/api/index";
 import DPlayer from "dplayer";
 import "viewerjs/dist/viewer.css";
@@ -313,6 +332,11 @@ export default {
   name: "oss-manage",
   data() {
     return {
+      selectFileRow: {
+        name: ""
+      },
+      shenQingModal: false,
+      getReason: "",
       dp: null,
       uploadFileUrl: uploadFile,
       openSearch: true,
@@ -332,7 +356,7 @@ export default {
       videoTitle: "",
       modalTitle: "", // 添加或编辑标题
       searchForm: {
-        // 搜索框对应data对象
+        secrecy: 0,
         name: "",
         fkey: "",
         type: "",
@@ -373,23 +397,26 @@ export default {
           align: "center",
         },
         {
-          title: "原文件名",
+          title: "文件名",
           key: "name",
           minWidth: 130,
           sortable: true,
         },
-        {
-          title: "存储文件名",
-          key: "fkey",
-          minWidth: 165,
-          sortable: true,
-        },
+        // {
+        //   title: "存储文件名",
+        //   key: "fkey",
+        //   minWidth: 165,
+        //   sortable: true,
+        // },
         {
           title: "缩略图(点击预览)",
           key: "url",
           width: 150,
           align: "center",
           render: (h, params) => {
+            if(!this.getStore("roles").includes("ROLE_ADMIN")) {
+              return "";
+            }
             if (params.row.type.includes("image") > 0) {
               return h("img", {
                 attrs: {
@@ -695,6 +722,11 @@ export default {
           },
         },
         {
+          title: "所属部门",
+          key: "departmentTitle",
+          minWidth: 180,
+        },
+        {
           title: "创建时间",
           key: "createTime",
           width: 180,
@@ -706,52 +738,84 @@ export default {
           key: "action",
           align: "center",
           fixed: "right",
-          width: 170,
+          width: 230,
           render: (h, params) => {
-            return h("div", [
+            if(this.getStore("roles").includes("ROLE_ADMIN")) {
+              return h("div", [
+                h(
+                  "a",
+                  {
+                    on: {
+                      click: () => {
+                        this.shenQing(params.row);
+                      },
+                    },
+                  },
+                  "文件申请"
+                ),
+                h("Divider", {
+                  props: {
+                    type: "vertical",
+                  },
+                }),
+                h(
+                  "a",
+                  {
+                    on: {
+                      click: () => {
+                        this.download(params.row);
+                      },
+                    },
+                  },
+                  "下载"
+                ),
+                h("Divider", {
+                  props: {
+                    type: "vertical",
+                  },
+                }),
+                h(
+                  "Dropdown",
+                  {
+                    props: { transfer: true },
+                    on: {
+                      "on-click": (v) => {
+                        this.changeDropDown(params.row, v);
+                      },
+                    },
+                  },
+                  [
+                    h("a", [
+                      "更多操作",
+                      h("Icon", {
+                        props: {
+                          type: "ios-arrow-down",
+                        },
+                      }),
+                    ]),
+                    h("DropdownMenu", { slot: "list" }, [
+                      h("DropdownItem", { props: { name: "rename" } }, "重命名"),
+                      h("DropdownItem", { props: { name: "copy" } }, "复制"),
+                      h("DropdownItem", { props: { name: "remove" } }, "删除"),
+                    ]),
+                  ]
+                ),
+              ]);
+            } else {
+              return h("div", [
               h(
                 "a",
                 {
                   on: {
                     click: () => {
-                      this.download(params.row);
+                      this.shenQing(params.row);
                     },
                   },
                 },
-                "下载"
-              ),
-              h("Divider", {
-                props: {
-                  type: "vertical",
-                },
-              }),
-              h(
-                "Dropdown",
-                {
-                  props: { transfer: true },
-                  on: {
-                    "on-click": (v) => {
-                      this.changeDropDown(params.row, v);
-                    },
-                  },
-                },
-                [
-                  h("a", [
-                    "更多操作",
-                    h("Icon", {
-                      props: {
-                        type: "ios-arrow-down",
-                      },
-                    }),
-                  ]),
-                  h("DropdownMenu", { slot: "list" }, [
-                    h("DropdownItem", { props: { name: "rename" } }, "重命名"),
-                    h("DropdownItem", { props: { name: "copy" } }, "复制"),
-                    h("DropdownItem", { props: { name: "remove" } }, "删除"),
-                  ]),
-                ]
-              ),
-            ]);
+                "文件申请"
+              )
+              ])
+            }
           },
         },
       ],
@@ -985,6 +1049,17 @@ export default {
           "?attname=&response-content-type=application/octet-stream&filename=" +
           v.name
       );
+    },
+    shenQing(e) {
+      this.shenQingModal = true;
+      this.selectFileRow = e;
+    },
+    shenQingFx() {
+      fileShenQing({id: this.selectFileRow.id,reason: this.getReason,type: 0}).then(res => {
+        if(res.success) {
+          this.$Message.success("申请成功!");
+        }
+      })
     },
     showOffice(v) {
       window.open("https://view.officeapps.live.com/op/view.aspx?src=" + v.url);

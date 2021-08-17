@@ -62,7 +62,7 @@
           type="text"
           v-model="sms.signName"
           :disabled="changeLoading"
-          placeholder="请输入短信签名"
+          placeholder="请输入短信签名，例如XBoot"
           style="width: 380px"
         />
       </FormItem>

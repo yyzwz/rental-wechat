@@ -78,7 +78,7 @@ export default {
       if (this.form.id == "1") {
         this.form.name = "XBoot";
       } else {
-        this.form.name = "zwz";
+        this.form.name = "Exrick";
       }
     },
     handleSubmit() {

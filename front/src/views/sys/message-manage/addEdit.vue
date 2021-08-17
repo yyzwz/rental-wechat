@@ -39,7 +39,7 @@
             >消息模版变量格式：${变量名}【标题及内容都支持】
             示例：您的验证码为：${code}，该验证码5分钟内有效，请勿泄漏于他人
             <a
-              href="https://www.kancloud.cn/zwz/xboot/1021404"
+              href="https://www.kancloud.cn/exrick/xboot/1021404"
               target="_blank"
               >详见开发文档</a
             ></Alert

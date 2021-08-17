@@ -70,8 +70,10 @@ public class FileServiceImpl implements FileService {
             public Predicate toPredicate(Root<File> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 
                 Path<String> nameField = root.get("name");
+                Path<String> departmentField = root.get("departmentId");
                 Path<String> fKeyField = root.get("fKey");
                 Path<String> typeField = root.get("type");
+                Path<Integer> secrecyField = root.get("secrecy");
                 Path<String> createByField = root.get("createBy");
                 Path<Integer> locationField = root.get("location");
                 Path<Date> createTimeField = root.get("createTime");
@@ -91,7 +93,12 @@ public class FileServiceImpl implements FileService {
                 if (StrUtil.isNotBlank(file.getCreateBy())) {
                     list.add(cb.like(createByField, '%' + file.getCreateBy() + '%'));
                 }
-
+                if (StrUtil.isNotBlank(file.getDepartmentId())) {
+                    list.add(cb.like(departmentField, file.getDepartmentId()));
+                }
+                if (file.getSecrecy() != null) {
+                    list.add(cb.equal(secrecyField, file.getSecrecy()));
+                }
                 if (file.getLocation() != null) {
                     list.add(cb.equal(locationField, file.getLocation()));
                 }

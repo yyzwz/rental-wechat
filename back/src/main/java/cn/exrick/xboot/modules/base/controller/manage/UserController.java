@@ -26,6 +26,7 @@ import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -81,9 +82,6 @@ public class UserController {
 
     @Autowired
     private AddMessage addMessage;
-
-    @Autowired
-    private DeleteMapper deleteMapper;
 
     @Autowired
     private RedisTemplateHelper redisTemplate;
@@ -267,6 +265,15 @@ public class UserController {
             // 游离态 避免后面语句导致持久化
             entityManager.detach(u);
             u.setPassword(null);
+            Department department = departmentService.get(u.getDepartmentId());
+            String departmentTitle = department.getTitle();
+            if(!department.getParentId().equals("0")) {
+                Department department1 = departmentService.get(department.getParentId());
+                if(department1 != null) {
+                    departmentTitle = department1.getTitle() + "-" + departmentTitle;
+                }
+            }
+            u.setDepartmentTitle(departmentTitle);
         }
         return new ResultUtil<Page<User>>().setData(page);
     }
@@ -353,10 +360,10 @@ public class UserController {
         u.setUsername(old.getUsername());
         // 若修改了手机和邮箱判断是否唯一
         if (!old.getMobile().equals(u.getMobile()) && userService.findByMobile(u.getMobile()) != null) {
-            return ResultUtil.error("该手机号已绑定其他账户");
+            return ResultUtil.error("手机号1已绑定其他账户");
         }
-        if (!old.getEmail().equals(u.getEmail()) && userService.findByEmail(u.getEmail()) != null) {
-            return ResultUtil.error("该邮箱已绑定其他账户");
+        if (u.getMobile2() != null && old.getMobile2() != null && !old.getMobile2().equals(u.getMobile2()) && userService.findByMobile(u.getMobile2()) != null) {
+            return ResultUtil.error("手机号2已绑定其他账户");
         }
 
         if (StrUtil.isNotBlank(u.getDepartmentId())) {
@@ -432,68 +439,89 @@ public class UserController {
             departmentHeaderService.deleteByUserId(id);
 
             // 删除关联流程、社交账号数据
-            try {
-                deleteMapper.deleteActNode(u.getId());
-                deleteMapper.deleteActStarter(u.getId());
-                deleteMapper.deleteSocial(u.getUsername());
-            } catch (Exception e) {
-                log.warn(e.toString());
-            }
+//            try {
+//                deleteMapper.deleteActNode(u.getId());
+//                deleteMapper.deleteActStarter(u.getId());
+//                deleteMapper.deleteSocial(u.getUsername());
+//            } catch (Exception e) {
+//                log.warn(e.toString());
+//            }
         }
         return ResultUtil.success("批量通过id删除数据成功");
     }
 
+    @Data
+    private static class UserImportVo {
+        private String username;
+        private String nickname;
+        private String password;
+        private String department;
+        private String mobile1;
+        private String mobile2;
+        private String position;
+    }
+
     @RequestMapping(value = "/importData", method = RequestMethod.POST)
     @ApiOperation(value = "导入用户数据")
-    public Result<Object> importData(@RequestBody List<User> users) {
-
+    public Result<Object> importData(@RequestBody List<UserImportVo> users) {
+        List<Department> departmentList = departmentService.getAll();
         List<Integer> errors = new ArrayList<>();
         List<String> reasons = new ArrayList<>();
         int count = 0;
-        for (User u : users) {
+        for (UserImportVo u : users) {
+            User user = new User();
             count++;
             // 验证用户名、密码、手机、邮箱不为空
-            if (StrUtil.isBlank(u.getUsername()) || StrUtil.isBlank(u.getPassword()) || StrUtil.isBlank(u.getMobile())
-                    || StrUtil.isBlank(u.getEmail())) {
+            if (StrUtil.isBlank(u.getUsername()) || StrUtil.isBlank(u.getPassword()) || StrUtil.isBlank(u.getMobile1())) {
                 errors.add(count);
-                reasons.add("用户名、密码、手机、邮箱不能为空");
+                reasons.add("用户名、密码、手机不能为空");
                 continue;
             }
             // 验证用户名、手机、邮箱唯一
-            if (userService.findByUsername(u.getUsername()) != null || userService.findByMobile(u.getMobile()) != null
-                    || userService.findByEmail(u.getEmail()) != null) {
+            if (userService.findByUsername(u.getUsername()) != null || userService.findByMobile(u.getMobile1()) != null
+                    || userService.findByEmail(u.getMobile2()) != null) {
                 errors.add(count);
-                reasons.add("用户名、手机、邮箱已存在");
+                reasons.add("用户名、手机已存在");
                 continue;
             }
-            // 加密密码
-            u.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()));
-            // 验证部门id正确性
-            if (StrUtil.isNotBlank(u.getDepartmentId())) {
-                Department department = departmentService.get(u.getDepartmentId());
-                if (department == null) {
-                    errors.add(count);
-                    reasons.add("部门id不存在");
-                    continue;
-                }
-                u.setDepartmentTitle(department.getTitle());
-            }
-            if (u.getStatus() == null) {
-                u.setStatus(CommonConstant.USER_STATUS_NORMAL);
-            }
-            userService.save(u);
-            // 分配默认角色
-            if (u.getDefaultRole() != null && u.getDefaultRole() == 1) {
-                List<Role> roleList = roleService.findByDefaultRole(true);
-                if (roleList != null && roleList.size() > 0) {
-                    for (Role role : roleList) {
-                        UserRole ur = new UserRole().setUserId(u.getId()).setRoleId(role.getId());
-                        userRoleService.save(ur);
-                    }
+            String departmentStr = u.getDepartment();
+            String[] split = departmentStr.split("-");
+            String depTitle1 = split[0];
+            String depTitle2 = split[1];
+            String depParId = "0";
+            String depParTitle = "0";
+            for (Department department : departmentList) {
+                if(depTitle1.equals(department.getTitle())) {
+                    depParId = department.getId();
+                    break;
                 }
             }
+            for (Department department : departmentList) {
+                if(depTitle2.equals(department.getTitle()) && department.getParentId().equals(depParId)) {
+                    depParId = department.getId();
+                    depParTitle = department.getTitle();
+                    break;
+                }
+            }
+            if(depParTitle.equals("0")) {
+                errors.add(count);
+                reasons.add(split + " 部门不存在");
+            }
+            user.setEmail(u.getMobile1() + "@163.com");
+            user.setAvatar("https://s1.ax1x.com/2018/05/19/CcdVQP.png");
+            user.setUsername(u.getUsername());
+            user.setNickname(u.getNickname());
+            user.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()));
+            user.setMobile2(u.getMobile2());
+            user.setMobile(u.getMobile1());
+            user.setPosition(u.getPosition());
+            user.setDepartmentId(depParId);
+            user.setDepartmentTitle(depParTitle);
+            user.setStatus(CommonConstant.USER_STATUS_NORMAL);
+            userService.save(user);
+            UserRole ur = new UserRole().setUserId(user.getId()).setRoleId("496138616573953");
+            userRoleService.save(ur);
         }
-        // 批量保存数据
         int successCount = users.size() - errors.size();
         String successMessage = "全部导入成功，共计 " + successCount + " 条数据";
         String failMessage = "导入成功 " + successCount + " 条，失败 " + errors.size() + " 条数据。<br>" +

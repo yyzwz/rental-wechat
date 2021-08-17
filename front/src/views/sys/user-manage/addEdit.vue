@@ -72,25 +72,25 @@
           </Row>
           <Row :gutter="32">
             <Col span="12">
-              <FormItem label="用户名" prop="nickname">
+              <FormItem label="姓名" prop="nickname">
                 <Input v-model="form.nickname" />
-              </FormItem>
-            </Col>
-            <Col span="12">
-              <FormItem label="邮箱" prop="email">
-                <Input v-model="form.email" />
-              </FormItem>
-            </Col>
-          </Row>
-          <Row :gutter="32">
-            <Col span="12">
-              <FormItem label="手机号" prop="mobile">
-                <Input v-model="form.mobile" />
               </FormItem>
             </Col>
             <Col span="12">
               <FormItem label="性别">
                 <dict dict="sex" v-model="form.sex" transfer />
+              </FormItem>
+            </Col>
+          </Row>
+          <Row :gutter="32">
+            <Col span="12">
+              <FormItem label="手机号1" prop="mobile">
+                <Input v-model="form.mobile" />
+              </FormItem>
+            </Col>
+            <Col span="12">
+              <FormItem label="手机号2" prop="mobile">
+                <Input v-model="form.mobile2" />
               </FormItem>
             </Col>
           </Row>
@@ -109,6 +109,18 @@
                   <Option :value="0">普通用户</Option>
                   <Option :value="1">管理员</Option>
                 </Select>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row :gutter="32">
+            <Col span="12">
+              <FormItem label="职位" prop="position">
+                <Input v-model="form.position" />
+              </FormItem>
+            </Col>
+            <Col span="12">
+              <FormItem label="邮箱" prop="email">
+                <Input v-model="form.email" />
               </FormItem>
             </Col>
           </Row>
@@ -241,10 +253,6 @@ export default {
         password: [
           { required: true, message: "请输入密码", trigger: "change" },
           { validator: validatePassword, trigger: "blur" },
-        ],
-        email: [
-          { required: true, message: "请输入邮箱地址" },
-          { type: "email", message: "邮箱格式不正确" },
         ],
       },
     };

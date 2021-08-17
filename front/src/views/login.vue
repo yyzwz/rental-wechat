@@ -12,7 +12,7 @@
         <div class="loginLeft">
           <img src="../assets/login/logo.png" alt="" srcset="">
           <span class="line"></span>
-          <span class="title">私车公用管理系统</span>
+          <span class="title">通讯录管理系统</span>
         </div>
       </div>
       <div class="loginMiddle">
@@ -270,6 +270,7 @@ export default {
     getCaptchaImg() {
       this.loadingCaptcha = true;
       initCaptcha().then(res => {
+        console.log(res);
         this.loadingCaptcha = false;
         if (res.success) {
           this.captchaId = res.result;

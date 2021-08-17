@@ -139,6 +139,10 @@
           <router-view />
         </keep-alive>
       </div>
+      <!-- 页面页脚 -->
+      <div class="main-page-footer-content" v-if="showFooter">
+        <Footer class="main-page-footer" />
+      </div>
     </div>
     <!-- 全局加载动画 -->
     <circleLoading class="loading-position" v-show="loading" />
@@ -156,6 +160,7 @@ import fullScreen from "./main-components/fullscreen.vue";
 import language from "./main-components/language.vue";
 import messageTip from "./main-components/message-tip.vue";
 import user from "./main-components/user.vue";
+import Footer from "./main-components/footer.vue";
 import theme from "./main-components/theme.vue";
 import circleLoading from "@/views/my-components/xboot/circle-loading.vue";
 
@@ -173,6 +178,7 @@ export default {
     language,
     messageTip,
     user,
+    Footer,
     theme,
     circleLoading,
   },
@@ -181,7 +187,7 @@ export default {
       navPaddingLeft: this.menuWidth,
       searchType: "input",
       shrink: false,
-      sliceNum: 3,
+      sliceNum: 4,
       currNav: "",
       isFullScreen: false,
     };
@@ -264,7 +270,7 @@ export default {
       this.checkTag(this.$route.name);
       let currWidth = document.body.clientWidth;
       if (currWidth <= 1200) {
-        this.sliceNum = 2;
+        this.sliceNum = 4;
       }
     },
     getCurrNav() {
@@ -351,13 +357,13 @@ export default {
     resize() {
       let currWidth = document.body.clientWidth;
       if (currWidth <= 1200 && currWidth > 900) {
-        this.sliceNum = 2;
+        this.sliceNum = 4;
         this.shrink = true;
       } else if (currWidth <= 900) {
-        this.sliceNum = 1;
+        this.sliceNum = 2;
         this.shrink = true;
       } else {
-        this.sliceNum = 3;
+        this.sliceNum = 6;
         this.shrink = false;
       }
       if (currWidth < 1325 && currWidth > 1200) {

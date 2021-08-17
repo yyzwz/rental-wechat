@@ -6,18 +6,22 @@ import cn.exrick.xboot.common.exception.XbootException;
 import cn.exrick.xboot.common.redis.RedisTemplateHelper;
 import cn.exrick.xboot.common.utils.PageUtil;
 import cn.exrick.xboot.common.utils.ResultUtil;
+import cn.exrick.xboot.common.utils.SecurityUtil;
 import cn.exrick.xboot.common.vo.PageVo;
 import cn.exrick.xboot.common.vo.Result;
 import cn.exrick.xboot.common.vo.SearchVo;
 import cn.exrick.xboot.modules.base.entity.User;
+import cn.exrick.xboot.modules.base.entity.UserRole;
 import cn.exrick.xboot.modules.base.service.SettingService;
 import cn.exrick.xboot.modules.base.service.UserService;
+import cn.exrick.xboot.modules.base.service.mybatis.IUserRoleService;
 import cn.exrick.xboot.modules.base.vo.OssSetting;
 import cn.exrick.xboot.modules.file.entity.File;
 import cn.exrick.xboot.modules.file.manage.FileManageFactory;
 import cn.exrick.xboot.modules.file.manage.impl.LocalFileManage;
 import cn.exrick.xboot.modules.file.service.FileService;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.gson.Gson;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -68,13 +73,27 @@ public class FileController {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private SecurityUtil securityUtil;
+
+    @Autowired
+    private IUserRoleService iUserRoleService;
+
     @RequestMapping(value = "/getByCondition", method = RequestMethod.GET)
     @ApiOperation(value = "多条件分页获取")
     @ResponseBody
     public Result<Page<File>> getFileList(File file,
                                           SearchVo searchVo,
                                           PageVo pageVo) {
-
+        User currUser = securityUtil.getCurrUser();
+//        QueryWrapper<UserRole> qw = new QueryWrapper<>();
+//        qw.eq("user_id",currUser.getId());
+//        qw.eq("role_id","496138616573952");
+//        List<UserRole> list = iUserRoleService.list(qw);
+//        if(list.size() == 0) {
+//            file.setDepartmentId(currUser.getDepartmentId());
+//        }
+        file.setDepartmentId(currUser.getDepartmentId());
         Page<File> page = fileService.findByCondition(file, searchVo, PageUtil.initPage(pageVo));
         OssSetting os = new Gson().fromJson(settingService.get(SettingConstant.LOCAL_OSS).getValue(), OssSetting.class);
         Map<String, String> map = new HashMap<>(16);

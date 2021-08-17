@@ -34,13 +34,13 @@ public class XbootMPGenerator {
      * 实体类名
      * 建议仅需修改
      */
-    private static final String CLASS_NAME = "MyFiles";
+    private static final String CLASS_NAME = "GetFileAudit";
 
     /**
      * 类说明描述
      * 建议仅需修改
      */
-    private static final String DESCRIPTION = "图片文件处理";
+    private static final String DESCRIPTION = "文件获取审批";
 
     /**
      * 作者名

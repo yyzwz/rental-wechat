@@ -7,12 +7,12 @@
     <Card>
       <Row v-show="openSearch" @keydown.enter.native="handleSearch">
         <Form ref="searchForm" :model="searchForm" inline :label-width="70">
-          <FormItem label="用户名" prop="nickname">
+          <FormItem label="姓名" prop="nickname">
             <Input
               type="text"
               v-model="searchForm.nickname"
               clearable
-              placeholder="请输入用户名"
+              placeholder="请输入姓名"
               style="width: 200px"
             />
           </FormItem>
@@ -24,12 +24,30 @@
             ></department-choose>
           </FormItem>
           <span v-if="drop">
-            <FormItem label="手机号" prop="mobile">
+            <FormItem label="手机号1" prop="mobile">
               <Input
                 type="text"
                 v-model="searchForm.mobile"
                 clearable
                 placeholder="请输入手机号"
+                style="width: 200px"
+              />
+            </FormItem>
+            <FormItem label="手机号2" prop="mobile">
+              <Input
+                type="text"
+                v-model="searchForm.mobile2"
+                clearable
+                placeholder="请输入手机号"
+                style="width: 200px"
+              />
+            </FormItem>
+            <FormItem label="职位" prop="position">
+              <Input
+                type="text"
+                v-model="searchForm.position"
+                clearable
+                placeholder="请输入职位"
                 style="width: 200px"
               />
             </FormItem>
@@ -281,6 +299,7 @@ export default {
         username: "",
         departmentId: "",
         mobile: "",
+        mobile2: "",
         email: "",
         sex: "",
         type: "",
@@ -291,6 +310,7 @@ export default {
         order: "desc",
         startDate: "",
         endDate: "",
+        position: ""
       },
       selectDate: null,
       options: {

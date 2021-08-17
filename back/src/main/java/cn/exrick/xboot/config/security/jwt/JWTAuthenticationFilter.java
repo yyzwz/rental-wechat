@@ -82,6 +82,8 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             UsernamePasswordAuthenticationToken authentication = null;
             if (StrUtil.isNotBlank(header)) {
                 authentication = getAuthentication(header, response);
+            } else {
+                authentication = getAppAuthentication(appHeader, response);
             }
             if (authentication == null) {
                 return;
@@ -144,6 +146,33 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                 ResponseUtil.out(response, ResponseUtil.resultMap(false, 500, "解析token错误"));
             }
         }
+
+        if (StrUtil.isNotBlank(username)) {
+            // 踩坑提醒 此处password不能为null
+            User principal = new User(username, "", authorities);
+            return new UsernamePasswordAuthenticationToken(principal, null, authorities);
+        }
+        return null;
+    }
+
+    private UsernamePasswordAuthenticationToken getAppAuthentication(String appHeader, HttpServletResponse response) {
+
+        // 用户名
+        String username = null;
+
+        String v = redisTemplate.get(SecurityConstant.TOKEN_MEMBER_PRE + appHeader);
+        if (StrUtil.isBlank(v)) {
+            ResponseUtil.out(response, ResponseUtil.resultMap(false, 401, "会员登录已失效，请重新登录"));
+            return null;
+        }
+        TokenMember member = new Gson().fromJson(v, TokenMember.class);
+        username = member.getUsername();
+        // 权限
+        List<GrantedAuthority> authorities = securityUtil.getCurrMemberPerms(username);
+
+        // 重新设置失效时间
+        redisTemplate.set(SecurityConstant.MEMBER_TOKEN + username + ":" + member.getPlatform(), appHeader, appTokenProperties.getTokenExpireTime(), TimeUnit.DAYS);
+        redisTemplate.set(SecurityConstant.TOKEN_MEMBER_PRE + appHeader, v, appTokenProperties.getTokenExpireTime(), TimeUnit.DAYS);
 
         if (StrUtil.isNotBlank(username)) {
             // 踩坑提醒 此处password不能为null

@@ -8,6 +8,8 @@ import cn.exrick.xboot.common.vo.TokenMember;
 import cn.exrick.xboot.common.vo.TokenUser;
 import cn.exrick.xboot.config.properties.XbootAppTokenProperties;
 import cn.exrick.xboot.config.properties.XbootTokenProperties;
+import cn.exrick.xboot.modules.app.entity.Member;
+import cn.exrick.xboot.modules.app.service.MemberService;
 import cn.exrick.xboot.modules.base.entity.Department;
 import cn.exrick.xboot.modules.base.entity.Role;
 import cn.exrick.xboot.modules.base.entity.User;
@@ -23,7 +25,6 @@ import com.google.gson.reflect.TypeToken;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,7 +32,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,6 +51,9 @@ public class SecurityUtil {
     private XbootAppTokenProperties appTokenProperties;
 
     @Autowired
+    private MemberService memberService;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -56,28 +63,7 @@ public class SecurityUtil {
     private DepartmentService departmentService;
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
-
-    public String getAppToken(String username, Integer platform){
-
-        if(StrUtil.isBlank(username)){
-            throw new XbootException("code不能为空");
-        }
-        // 生成token
-        String token = UUID.randomUUID().toString().replace("-", "");
-        TokenMember member = new TokenMember(username, platform);
-        String key = SecurityConstant.MEMBER_TOKEN + member.getUsername()+":"+platform;
-        // 单平台登录 之前的token失效
-        if(appTokenProperties.getSpl()) {
-            String oldToken = redisTemplate.opsForValue().get(key);
-            if (StrUtil.isNotBlank(oldToken)) {
-                redisTemplate.delete(SecurityConstant.TOKEN_MEMBER_PRE + oldToken);
-            }
-        }
-        redisTemplate.opsForValue().set(key, token, appTokenProperties.getTokenExpireTime(), TimeUnit.DAYS);
-        redisTemplate.opsForValue().set(SecurityConstant.TOKEN_MEMBER_PRE + token, new Gson().toJson(member), appTokenProperties.getTokenExpireTime(), TimeUnit.DAYS);
-        return token;
-    }
+    private RedisTemplateHelper redisTemplate;
 
     public String getToken(String username, Boolean saveLogin) {
 
@@ -113,17 +99,17 @@ public class SecurityUtil {
             TokenUser user = new TokenUser(u.getUsername(), list, saved);
             // 单设备登录 之前的token失效
             if (tokenProperties.getSdl()) {
-                String oldToken = redisTemplate.opsForValue().get(SecurityConstant.USER_TOKEN + u.getUsername());
+                String oldToken = redisTemplate.get(SecurityConstant.USER_TOKEN + u.getUsername());
                 if (StrUtil.isNotBlank(oldToken)) {
                     redisTemplate.delete(SecurityConstant.TOKEN_PRE + oldToken);
                 }
             }
             if (saved) {
-                redisTemplate.opsForValue().set(SecurityConstant.USER_TOKEN + u.getUsername(), token, tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
-                redisTemplate.opsForValue().set(SecurityConstant.TOKEN_PRE + token, new Gson().toJson(user), tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
+                redisTemplate.set(SecurityConstant.USER_TOKEN + u.getUsername(), token, tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
+                redisTemplate.set(SecurityConstant.TOKEN_PRE + token, new Gson().toJson(user), tokenProperties.getSaveLoginTime(), TimeUnit.DAYS);
             } else {
-                redisTemplate.opsForValue().set(SecurityConstant.USER_TOKEN + u.getUsername(), token, tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
-                redisTemplate.opsForValue().set(SecurityConstant.TOKEN_PRE + token, new Gson().toJson(user), tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
+                redisTemplate.set(SecurityConstant.USER_TOKEN + u.getUsername(), token, tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
+                redisTemplate.set(SecurityConstant.TOKEN_PRE + token, new Gson().toJson(user), tokenProperties.getTokenExpireTime(), TimeUnit.MINUTES);
             }
         } else {
             // JWT不缓存权限 避免JWT长度过长
@@ -166,7 +152,7 @@ public class SecurityUtil {
         User u = getCurrUser();
         // 读取缓存
         String key = "userRole::depIds:" + u.getId();
-        String v = redisTemplate.opsForValue().get(key);
+        String v = redisTemplate.get(key);
         if (StrUtil.isNotBlank(v)) {
             deparmentIds = new Gson().fromJson(v, new TypeToken<List<String>>() {
             }.getType());
@@ -223,7 +209,7 @@ public class SecurityUtil {
         deparmentIds.clear();
         deparmentIds.addAll(set);
         // 缓存
-        redisTemplate.opsForValue().set(key, new Gson().toJson(deparmentIds), 15L, TimeUnit.DAYS);
+        redisTemplate.set(key, new Gson().toJson(deparmentIds), 15L, TimeUnit.DAYS);
         return deparmentIds;
     }
 
@@ -257,16 +243,56 @@ public class SecurityUtil {
         return authorities;
     }
 
+    public String getAppToken(String username, Integer platform) {
+
+        if (StrUtil.isBlank(username)) {
+            throw new XbootException("username不能为空");
+        }
+        // 生成token
+        String token = IdUtil.simpleUUID();
+        TokenMember member = new TokenMember(username, platform);
+        String key = SecurityConstant.MEMBER_TOKEN + member.getUsername() + ":" + platform;
+        // 单平台登录 之前的token失效
+        if (appTokenProperties.getSpl()) {
+            String oldToken = redisTemplate.get(key);
+            if (StrUtil.isNotBlank(oldToken)) {
+                redisTemplate.delete(SecurityConstant.TOKEN_MEMBER_PRE + oldToken);
+            }
+        }
+        redisTemplate.set(key, token, appTokenProperties.getTokenExpireTime(), TimeUnit.DAYS);
+        redisTemplate.set(SecurityConstant.TOKEN_MEMBER_PRE + token, new Gson().toJson(member), appTokenProperties.getTokenExpireTime(), TimeUnit.DAYS);
+        return token;
+    }
+
     /**
-     * 获取当前APP登录用户
+     * 获取当前登录会员
      * @return
      */
-    public Authentication getAppUser(){
+    public Member getCurrMember() {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated() || authentication.getName() == null
                 || authentication instanceof AnonymousAuthenticationToken) {
             throw new XbootException("未检测到登录会员");
         }
-        return authentication;
+        return memberService.findByUsername(authentication.getName());
+    }
+
+    /**
+     * 通过会员名获取其拥有权限
+     * @param username
+     */
+    public List<GrantedAuthority> getCurrMemberPerms(String username) {
+
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        Member member = memberService.findByUsername(username);
+        if (member == null || StrUtil.isBlank(member.getPermissions())) {
+            return authorities;
+        }
+        String[] as = member.getPermissions().split(",");
+        for (String a : as) {
+            authorities.add(new SimpleGrantedAuthority(a));
+        }
+        return authorities;
     }
 }

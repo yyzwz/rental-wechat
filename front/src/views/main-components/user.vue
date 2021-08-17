@@ -56,9 +56,7 @@ export default {
     };
   },
   methods: {
-    init() {
-      // console.log(this.$store.state.user);
-    },
+    init() {},
     handleClickUserDropdown(name) {
       if (name == "ownSpace") {
         util.openNewPage(this, "ownspace_index");

@@ -10,9 +10,6 @@
         <module name="xboot-plus" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="xboot-plus" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

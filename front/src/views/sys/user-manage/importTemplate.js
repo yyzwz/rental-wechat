@@ -77,11 +77,11 @@ export const userData = [
     },
     {
         username: "xboot",
-        nickname: "zwz",
+        nickname: "exrick",
         password: "123456",
         avatar: "https://s1.ax1x.com/2018/05/19/CcdVQP.png",
         departmentId: "40652338142121984",
-        email: "916077357@qq.com",
+        email: "1012139570@qq.com",
         sex: "男",
         address: "北京市,市辖区,东城区",
         mobile: "18782059033",

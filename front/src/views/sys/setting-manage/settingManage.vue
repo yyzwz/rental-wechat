@@ -236,7 +236,7 @@
                     <Input
                       type="text"
                       v-model="other.domain"
-                      placeholder="请输入应用部署域名前缀，如http://zwz.cn"
+                      placeholder="请输入应用部署域名前缀，如http://xboot.exrick.cn"
                       style="width: 380px"
                     />
                   </Tooltip>
@@ -251,7 +251,7 @@
                     <Input
                       type="text"
                       v-model="other.ssoDomain"
-                      placeholder="请输入应用部署一级域名，如zwz.cn"
+                      placeholder="请输入应用部署一级域名，如exrick.cn"
                       style="width: 380px"
                     />
                   </Tooltip>
