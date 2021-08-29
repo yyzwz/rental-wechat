@@ -84,7 +84,7 @@
 			getAuditDanList() {
 				var that = this;
 				uni.request({
-				    url: 'http://49.234.32.81:8888/xboot/audit/getAuditDan?userId=' + app.userData.id,
+				    url: 'http://125.124.223.192:82/xboot/audit/getAuditDan?userId=' + app.userData.id,
 					method: "GET",
 				    success: (res) => {
 						that.auditDanList = res.data.result;

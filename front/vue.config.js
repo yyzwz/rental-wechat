@@ -6,7 +6,8 @@ module.exports = {
         port: 9999,
         proxy: {
             '/xboot': {
-                target: 'http://127.0.0.1:8888',
+                target: 'http://125.124.223.192:82',
+                // target: 'http://127.0.0.1:8888',
                 ws: true
             },
             '/foo': {

@@ -295,4 +295,17 @@ public class SecurityUtil {
         }
         return authorities;
     }
+
+    /**
+     * 获取当前APP登录用户
+     * @return
+     */
+    public Authentication getAppUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getName() == null
+                || authentication instanceof AnonymousAuthenticationToken) {
+            throw new XbootException("未检测到登录会员");
+        }
+        return authentication;
+    }
 }

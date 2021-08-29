@@ -64,7 +64,7 @@ export default {
 	data() {
 		let that = this;
 		return {
-			action: 'http://49.234.32.81:8888/xboot/myFiles/uploadFile',
+			action: 'http://125.124.223.192:82/xboot/myFiles/uploadFile',
 			fileList: [],
 			params: {
 				action: "",
@@ -163,7 +163,7 @@ export default {
 			var that = this;
 			console.log(app.token)
 			uni.request({
-			    url: 'http://49.234.32.81:8888/xboot/carArchives/getAll',
+			    url: 'http://125.124.223.192:82/xboot/carArchives/getAll',
 				method: "GET",
 			    success: (res) => {
 					console.log(res);
@@ -191,7 +191,7 @@ export default {
 			var that = this;
 			console.log(this.model);
 			uni.request({
-			    url: 'http://49.234.32.81:8888/xboot/audit/addOnApp',
+			    url: 'http://125.124.223.192:82/xboot/audit/addOnApp',
 				method: "GET",
 				header: {
 					'content-type': 'application/json', 

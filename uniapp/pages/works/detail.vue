@@ -137,11 +137,11 @@
 			getOneDanData() {
 				var that = this;
 				uni.request({
-				    url: 'http://49.234.32.81:8888/xboot/audit/getOne?id=' + that.danId,
+				    url: 'http://125.124.223.192:82/xboot/audit/getOne?id=' + that.danId,
 					method: "GET",
 				    success: (res) => {
 						that.item = res.data.result;
-						that.imageList.push("https://zwz99.top/car/" + that.item.image);
+						that.imageList.push("http://125.124.223.192:82/appimage/" + that.item.image);
 				    },fail(e) {
 				    	console.log(e);
 				    }
@@ -172,7 +172,7 @@
 				console.log(status);
 				if(status == 'repair/refused') {
 					uni.request({
-					    url: 'http://49.234.32.81:8888/xboot/audit/auditOne?id=' + that.danId+'&status=2&userName='+app.userData.id + "&msg=" + that.sendDate.suggest,
+					    url: 'http://125.124.223.192:82/xboot/audit/auditOne?id=' + that.danId+'&status=2&userName='+app.userData.id + "&msg=" + that.sendDate.suggest,
 						method: "GET",
 					    success: (res) => {
 							uni.showToast({
@@ -185,7 +185,7 @@
 					});
 				} else if(status == 'repair/audit') {
 					uni.request({
-					    url: 'http://49.234.32.81:8888/xboot/audit/auditOne?id=' + that.danId+'&status=1&userName='+app.userData.id,
+					    url: 'http://125.124.223.192:82/xboot/audit/auditOne?id=' + that.danId+'&status=1&userName='+app.userData.id,
 						method: "GET",
 					    success: (res) => {
 							uni.showToast({

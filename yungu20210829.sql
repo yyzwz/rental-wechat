@@ -1401,7 +1401,8 @@ CREATE TABLE IF NOT EXISTS `t_file` (
 DELETE FROM `t_file`;
 /*!40000 ALTER TABLE `t_file` DISABLE KEYS */;
 INSERT INTO `t_file` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `name`, `size`, `type`, `url`, `f_key`, `location`, `department_id`, `department_title`, `secrecy`) VALUES
-	(1427431262871752705, 'admin', '2021-08-17 08:45:08', 0, 'admin', '2021-08-17 08:45:08', '卡通一寸照.png', 134919, 'image/png', 'C:\\system-file/2021/8/17/04efc73013db44db899ccc8121eca9b6.png', '04efc73013db44db899ccc8121eca9b6.png', 0, '40322811096469504', '数字经济总部-经营管理委员会', 1);
+	(1427431262871752705, 'admin', '2021-08-17 08:45:08', 1, 'admin', '2021-08-17 08:45:08', '卡通一寸照.png', 134919, 'image/png', 'C:\\system-file/2021/8/17/04efc73013db44db899ccc8121eca9b6.png', '04efc73013db44db899ccc8121eca9b6.png', 0, '40322811096469504', '数字经济总部-经营管理委员会', 1),
+	(1431566297514250241, 'admin', '2021-08-28 18:36:17', 0, 'admin', '2021-08-28 18:36:17', 'QQ截图20210828183607.png', 7513, 'image/png', '/usr/xboot/oafile/2021/8/28/5d8d579439fe4846b278d4a810700301.png', '5d8d579439fe4846b278d4a810700301.png', 0, '40322811096469504', '数字经济总部-经营管理委员会', 0);
 /*!40000 ALTER TABLE `t_file` ENABLE KEYS */;
 
 -- 导出  表 yungu.t_folk_activities 结构
@@ -1592,7 +1593,11 @@ INSERT INTO `t_log` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, 
 	(1427211215419084800, NULL, '2021-08-16 18:10:45', 0, NULL, '2021-08-16 18:10:45', 56, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"YYXK","saveLogin":"true","captchaId":"8a49caabf11f410dbe7ab93fb2263861","username":"admin"}', 'POST', '/xboot/login', 'admin', 1, 'Chrome 92.0.4515.131 | Windows Windows 10 or Windows Server 2016 | PC端'),
 	(1427214156607655936, NULL, '2021-08-16 18:22:26', 0, NULL, '2021-08-16 18:22:26', 97, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"DAQS","saveLogin":"true","captchaId":"66c63480d3b746ad82c91f348f99bb2b","username":"admin"}', 'POST', '/xboot/login', 'admin', 1, 'Chrome 92.0.4515.131 | Windows Windows 10 or Windows Server 2016 | PC端'),
 	(1427219661648433152, NULL, '2021-08-16 18:44:19', 0, NULL, '2021-08-16 18:44:19', 252, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"DPAE","saveLogin":"true","captchaId":"a3a9606c1a4a42f3bf67348232a39085","username":"admin"}', 'POST', '/xboot/login', 'admin', 1, 'Chrome 92.0.4515.131 | Windows Windows 10 or Windows Server 2016 | PC端'),
-	(1427430212496396288, NULL, '2021-08-17 08:40:58', 0, NULL, '2021-08-17 08:40:58', 256, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"K1BE","saveLogin":"true","captchaId":"63c4942609274284bac8b90c8a75c22a","username":"admin"}', 'POST', '/xboot/login', 'admin', 1, 'Chrome 92.0.4515.131 | Windows Windows 10 or Windows Server 2016 | PC端');
+	(1427430212496396288, NULL, '2021-08-17 08:40:58', 0, NULL, '2021-08-17 08:40:58', 256, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"K1BE","saveLogin":"true","captchaId":"63c4942609274284bac8b90c8a75c22a","username":"admin"}', 'POST', '/xboot/login', 'admin', 1, 'Chrome 92.0.4515.131 | Windows Windows 10 or Windows Server 2016 | PC端'),
+	(1431563719170723840, NULL, '2021-08-28 18:26:03', 0, NULL, '2021-08-28 18:26:03', 28, '122.224.37.226', '未知', '登录系统', '{"password":"你是看不见我的","code":"svcg","saveLogin":"true","captchaId":"2aaaec4697cb47ccb358d1c40e2af2b6","username":"admin"}', 'POST', '/xboot/login', 'admin', 1, 'Chrome 92.0.4515.131 | Windows Windows 10 or Windows Server 2016 | PC端'),
+	(1431567270596972544, NULL, '2021-08-28 18:40:09', 0, NULL, '2021-08-28 18:40:09', 72, '122.224.37.226', '未知', '登录系统', '{"password":"你是看不见我的","code":"X8NY","saveLogin":"true","captchaId":"995fca7936534a0eb4d9dfeabeaab430","username":"admin"}', 'POST', '/xboot/login', 'admin', 1, 'Chrome 92.0.4515.131 | Windows Windows 10 or Windows Server 2016 | PC端'),
+	(1431854718396796928, NULL, '2021-08-29 13:42:22', 0, NULL, '2021-08-29 13:42:22', 312, '127.0.0.1', '未知', '登录系统', '{"password":"你是看不见我的","code":"OZNJ","saveLogin":"true","captchaId":"3b3ebd606d5b42cba058d4b3e8d850a5","username":"admin"}', 'POST', '/xboot/login', 'admin', 1, 'Chrome 92.0.4515.131 | Windows Windows 10 or Windows Server 2016 | PC端'),
+	(1431861582543065088, NULL, '2021-08-29 14:09:39', 0, NULL, '2021-08-29 14:09:39', 63, '122.224.37.226', '未知', '登录系统', '{"password":"你是看不见我的","code":"W1QT","saveLogin":"true","captchaId":"10e7d42d930145a9bb5fdd9e903ec384","username":"admin"}', 'POST', '/xboot/login', 'admin', 1, 'Chrome 92.0.4515.131 | Windows Windows 10 or Windows Server 2016 | PC端');
 /*!40000 ALTER TABLE `t_log` ENABLE KEYS */;
 
 -- 导出  表 yungu.t_meeting 结构
@@ -1714,7 +1719,7 @@ CREATE TABLE IF NOT EXISTS `t_permission` (
 DELETE FROM `t_permission`;
 /*!40000 ALTER TABLE `t_permission` DISABLE KEYS */;
 INSERT INTO `t_permission` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `description`, `name`, `parent_id`, `type`, `sort_order`, `component`, `path`, `title`, `icon`, `level`, `button_type`, `status`, `url`, `show_always`, `is_menu`, `is_parent`) VALUES
-	(5129710648430592, '', '2018-06-04 19:02:29', 0, 'admin', '2021-01-11 01:00:01', '', 'sys', 125909152017944576, 0, 1.00, 'Main', '/sys', '系统管理', 'ios-settings', 1, '', 0, '', b'1', NULL, b'1'),
+	(5129710648430592, '', '2018-06-04 19:02:29', 0, 'admin', '2021-08-28 18:26:45', '', 'sys', 125909152017944576, 0, 1.00, 'Main', '/sys', '系统管理', 'ios-settings', 1, '', 0, '', b'1', NULL, b'1'),
 	(5129710648430593, '', '2018-06-04 19:02:32', 0, '', '2018-08-13 15:15:33', '', 'user-manage', 5129710648430592, 0, 1.10, 'sys/user-manage/userManage', 'user-manage', '用户管理', 'md-person', 2, '', 0, '', b'1', NULL, b'1'),
 	(5129710648430594, '', '2018-06-04 19:02:35', 0, '', '2018-10-13 13:51:36', '', 'role-manage', 5129710648430592, 0, 1.60, 'sys/role-manage/roleManage', 'role-manage', '角色权限管理', 'md-contacts', 2, '', 0, '', b'1', NULL, b'1'),
 	(5129710648430595, '', '2018-06-04 19:02:37', 0, '', '2018-09-23 23:32:02', '', 'menu-manage', 5129710648430592, 0, 1.70, 'sys/menu-manage/menuManage', 'menu-manage', '菜单权限管理', 'md-menu', 2, '', 0, '', b'1', NULL, b'1'),
@@ -1939,7 +1944,7 @@ CREATE TABLE IF NOT EXISTS `t_setting` (
 DELETE FROM `t_setting`;
 /*!40000 ALTER TABLE `t_setting` DISABLE KEYS */;
 INSERT INTO `t_setting` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `value`) VALUES
-	('LOCAL_OSS', 'admin', '2021-06-21 14:20:58', 0, 'admin', '2021-08-16 14:26:04', '{"serviceName":"LOCAL_OSS","accessKey":"","secretKey":"**********","endpoint":"127.0.0.1:9999/xboot/file/view","bucket":"","http":"http://","bucketRegion":"","filePath":"C:\\\\system-file"}'),
+	('LOCAL_OSS', 'admin', '2021-06-21 14:20:58', 0, 'admin', '2021-08-28 18:39:07', '{"serviceName":"LOCAL_OSS","accessKey":"","secretKey":"**********","endpoint":"125.124.223.192:8088/xboot/file/view","bucket":"","http":"http://","bucketRegion":"","filePath":"/usr/xboot/oafile"}'),
 	('OSS_USED', 'admin', '2021-06-21 14:20:58', 0, 'admin', '2021-06-21 14:20:58', 'LOCAL_OSS'),
 	('OTHER_SETTING', 'admin', '2021-06-21 14:21:02', 0, 'admin', '2021-06-21 14:21:02', '{"domain":"http://127.0.0.1:8888","ssoDomain":"","blacklist":""}');
 /*!40000 ALTER TABLE `t_setting` ENABLE KEYS */;

@@ -30,7 +30,8 @@ public class MyFilesController {
         if(file == null){
             return ResultUtil.error("文件不存在");
         }
-        final String realPaths = "C:\\java\\code\\tang\\front\\html\\car\\";
+//        final String realPaths = "C:\\java\\code\\tang\\front\\html\\car\\";
+        final String realPaths = "/usr/local/nginx/html/appimage/";
         try {
             java.io.File dir = new File(realPaths);
             if (!dir.exists()) {

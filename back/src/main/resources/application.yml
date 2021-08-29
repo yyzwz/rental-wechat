@@ -1,10 +1,5 @@
-# 配置文件加密key 生产环境中可通过环境变量、命令行等形式进行设置
-jasypt:
-  encryptor:
-    password: xboot
-
 server:
-  port: 8888
+  port: 82
   servlet:
     context-path: /
   tomcat:
@@ -23,9 +18,9 @@ spring:
     timeout-per-shutdown-phase: 10S
   # 数据源
   datasource:
-    url: jdbc:mysql://rm-bp1ka47q1c925092xyo.mysql.rds.aliyuncs.com:1701/yungu?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true
-    username: artsky
-    password: ENC(Ixm1siLcJuwh/+lTqDTN6ud4R+Yz+zV0YwOOaJZ57zTXsBS6ZmGRZF8RynzmXxGw)
+    url: ENC(IlcWBCgnl7CLgLi9Qc+gzphptFxWePs/e5JjCDRzVeLz8A4x6JesVQoNm7m0gUOfGJqYuRRCct2mBHllYfHMPwZ6oF0VF8zbr4oAUzqsf1QhXQFQ8gXMsiV8SPR42kR76DKQvn7STJhQZIe/2EkQ/cP+6z4jr2FRkXN/VTxwWq6/jnZK5G/sXGZ8ZZNpZJGlDpaiT/c0M7GKesVM/2x8iA==)
+    username: ENC(ZsfD1F+35MoMGo0xTS0fSV9YJla1Y5tLBKEbe92uJAaPZd8jTXfnG5ZoyDlox8ME)
+    password: ENC(m95ArVtcp8Cj55+Pl043xgzImSw2J261dW+RPgAEhwDFEdeXbIy84brFNLiVNd4b)
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     # Druid StatViewServlet配置
@@ -36,8 +31,8 @@ spring:
         url-pattern: /druid/*
         # 允许清空统计数据
         reset-enable: true
-        login-username: root
-        login-password: ENC(PYVnAYh+j5C3jkMV1d+myj6JzDaUk7pcfTWUaYsvQdEVkuvIVf7Y0mOU9XkffxT8)
+        login-username: ENC(XCjfpejD9wVaf5I5C1lpWnPNESK5vKHwd4qryEdt3v4kv78tDEixgb0cCPBLsnd7)
+        login-password: ENC(fD8FLi9NTEn9IKOzDb00yHlcYGb1nYdan7LUy4fYtPCGyNLmXr5i5EgVbK6hmIPJ)
         # IP白名单 多个逗号分隔
         allow:
         # IP黑名单
@@ -63,7 +58,7 @@ spring:
       ddl-auto: update
   # Redis 若设有密码自行添加配置password
   redis:
-    host: 127.0.0.1
+    host: localhost
     # 数据库索引 默认0
     database: 0
     port: 6379
@@ -120,13 +115,14 @@ spring:
   boot:
     admin:
       # 修改上下文路径
-      context-path: /xboot/admin
+      context-path: ENC(v20ucM/iQXZq60qtQeXapDKzOPgJrt8p1TqHBaZYfBN2tpEy+4Pt3HgBLLETdiVZ)
       client:
         # 服务端url
         url: http://127.0.0.1:${server.port}/xboot/admin
         instance:
           # 实例url
           service-base-url: http://127.0.0.1:${server.port}/
+        enabled: false
   resources:
     cache:
       cachecontrol:
@@ -251,6 +247,8 @@ captcha:
 ignored:
   # 无需登录认证的请求
   urls:
+    - /xboot/audit/**
+    - /xboot/myFiles/**
     - /xboot/uniapp/login
     - /xboot/app/v1/**
     - /xboot/oauth2/**
@@ -312,17 +310,17 @@ knife4j:
   enable: true
 
 swagger:
-  title: XBoot API接口文档
-  description: XBoot Api Documentation
+  title: 云谷管理系统 API接口文档
+  description: YunGu Api Documentation
   version: 1.0.0
   termsOfServiceUrl: http://xboot.exrick.cn
   contact:
-    name: Exrick
-    url: http://blog.exrick.cn
-    email: 1012139570@qq.com
+    name: YunGu
+    url: http://YunGu.cn
+    email: YunGu@qq.com
   # 分组名
-  group: 1.XBoot管理接口 v1.0
-  group2: 2.XBoot APP接口 v1.0
+  group: 1.YunGu管理接口 v1.0
+  group2: 2.YunGu APP接口 v1.0
 
 # Mybatis-plus
 mybatis-plus:
@@ -338,8 +336,8 @@ logging:
     root: info
   file:
     # 指定路径
-    path: xboot-logs
+    path: yungu-logs
     # 最大保存天数
-    max-history: 7
+    max-history: 2000
     # 每个文件最大大小
     max-size: 5MB

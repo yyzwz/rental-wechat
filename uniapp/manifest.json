@@ -4,7 +4,7 @@
     // 自行更换uniapp appid 可登录查看uniapp提供的用户统计 https://tongji.dcloud.net.cn/
     "description" : "私车公用管理系统",
     "versionName" : "2.0.0",
-    "versionCode" : 122,
+    "versionCode" : 123,
     "transformPx" : false,
     "app-plus" : {
         "compatible" : {

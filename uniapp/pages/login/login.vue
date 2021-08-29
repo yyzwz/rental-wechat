@@ -30,7 +30,7 @@ export default {
 			that.resData = "请求中";
 			that.loadingFlag = true;
 			uni.request({
-			    url: 'http://49.234.32.81:8888/xboot/uniapp/login',
+			    url: 'http://125.124.223.192:82/xboot/uniapp/login',
 			    data: {
 			        code: that.form.code,
 					pwd: that.form.pwd
