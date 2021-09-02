@@ -40,6 +40,9 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
   </component>
   <component name="ReactorSettings">
@@ -48,7 +51,7 @@
   <component name="RunManager" selected="Spring Boot.XbootApplication">
     <configuration name="JasyptUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cn.exrick.xboot.common.utils.JasyptUtil" />
-      <module name="xboot-plus" />
+      <module name="yungu" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="cn.exrick.xboot.common.utils.*" />
@@ -61,7 +64,7 @@
     </configuration>
     <configuration name="XbootMPGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cn.exrick.xboot.generator.XbootMPGenerator" />
-      <module name="xboot-plus" />
+      <module name="yungu" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="cn.exrick.xboot.generator.*" />
@@ -84,7 +87,7 @@
       </method>
     </configuration>
     <configuration name="XbootApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="xboot-plus" />
+      <module name="yungu" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="cn.exrick.xboot.XbootApplication" />
       <option name="VM_PARAMETERS" value="-Djasypt.encryptor.password=ZWZyungu2021" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -126,7 +129,10 @@
       <workItem from="1630214786099" duration="877000" />
       <workItem from="1630215987125" duration="1556000" />
       <workItem from="1630218705993" duration="33000" />
-      <workItem from="1630221337234" duration="1873000" />
+      <workItem from="1630221337234" duration="2219000" />
+      <workItem from="1630382217509" duration="825000" />
+      <workItem from="1630386386826" duration="41000" />
+      <workItem from="1630386433480" duration="272000" />
     </task>
     <servers />
   </component>
