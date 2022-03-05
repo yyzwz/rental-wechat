@@ -1,0 +1,7 @@
+{
+  "desc": "出租房屋管理系统",
+  "rules": [{
+  "action": "allow",
+  "page": "*"
+  }]
+}
